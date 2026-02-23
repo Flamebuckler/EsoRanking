@@ -126,9 +126,9 @@ function displayResults(results) {
 		<tr>
 			<th>Region</th>
 			<th>Leaderboard</th>
-			<th>Rang</th>
+			<th>Ranking</th>
 			<th>Account</th>
-			<th>Char</th>
+			<th>Character</th>
 		</tr>
 	`;
 	table.appendChild(thead);
