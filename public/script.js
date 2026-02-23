@@ -33,16 +33,36 @@ async function searchAccount(name) {
 	}
 	// perform lookup via index if available
 	const results = [];
-	const query = name.replace(/^@/, '').toLowerCase();
+	// split into terms by whitespace (allows multiple search words)
+	const terms = name
+		.trim()
+		.split(/\s+/)
+		.map((t) => t.replace(/^@/, '').toLowerCase())
+		.filter(Boolean);
 	if (window.__index) {
-		// exact key match first
-		if (window.__index.has(query)) {
-			results.push(...window.__index.get(query));
-		}
-		// also add substring matches (iterate keys or use scan)
-		for (const [key, arr] of window.__index) {
-			if (key.includes(query) && key !== query) {
-				results.push(...arr);
+		const seen = new Set();
+		for (const query of terms) {
+			// exact key match first
+			if (window.__index.has(query)) {
+				for (const item of window.__index.get(query)) {
+					const key = JSON.stringify(item);
+					if (!seen.has(key)) {
+						seen.add(key);
+						results.push(item);
+					}
+				}
+			}
+			// substring matches
+			for (const [key, arr] of window.__index) {
+				if (key.includes(query) && key !== query) {
+					for (const item of arr) {
+						const key2 = JSON.stringify(item);
+						if (!seen.has(key2)) {
+							seen.add(key2);
+							results.push(item);
+						}
+					}
+				}
 			}
 		}
 		return results;
@@ -53,15 +73,17 @@ async function searchAccount(name) {
 			for (const entry of entries) {
 				const acct = entry.account ? entry.account.replace(/^@/, '').toLowerCase() : '';
 				const char = entry.character ? entry.character.replace(/^@/, '').toLowerCase() : '';
-				if (acct.includes(query) || char.includes(query)) {
-					results.push({
-						leaderboard: lbName,
-						region,
-						rank: entry.rank,
-						account: entry.account,
-						character: entry.character,
-					});
-					break;
+				for (const query of terms) {
+					if (acct.includes(query) || char.includes(query)) {
+						results.push({
+							leaderboard: lbName,
+							region,
+							rank: entry.rank,
+							account: entry.account,
+							character: entry.character,
+						});
+						break;
+					}
 				}
 			}
 		}
