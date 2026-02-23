@@ -2,7 +2,6 @@ async function searchAccount(name) {
 	// search using the bundled static data only (no live API available)
 	// load static data from data.json on first use
 	if (!window.__staticData) {
-		console.log('Loading static data from data.json...');
 		try {
 			const r = await fetch('data.json');
 			window.__staticData = await r.json();
@@ -72,29 +71,83 @@ async function searchAccount(name) {
 
 function displayResults(results) {
 	const container = document.getElementById('results');
-	container.innerHTML = '';
-	if (results.length === 0) {
-		container.textContent = 'No entries found';
+	if (!container) {
+		console.warn('results container not found; aborting display');
 		return;
 	}
-	const ul = document.createElement('ul');
-	for (const r of results) {
-		const li = document.createElement('li');
-		let text = `${r.leaderboard} (${r.region.toUpperCase()}): Rang ${r.rank}`;
-		if (r.account || r.character) {
-			text += ' – ';
-			if (r.account) text += `Account: ${r.account}`;
-			if (r.character) text += r.account ? `, Char: ${r.character}` : `Char: ${r.character}`;
-		}
-		li.textContent = text;
-		ul.appendChild(li);
+	// ensure the section is visible on search
+	container.style.display = '';
+	container.classList.remove('hidden');
+	container.innerHTML = '';
+	if (!results || results.length === 0) {
+		const empty = document.createElement('div');
+		empty.className = 'empty';
+		empty.textContent = 'No entries found';
+		container.appendChild(empty);
+		return;
 	}
-	container.appendChild(ul);
+
+	const table = document.createElement('table');
+	table.className = 'results-table';
+	const thead = document.createElement('thead');
+	thead.innerHTML = `
+		<tr>
+			<th>Leaderboard</th>
+			<th>Region</th>
+			<th>Rang</th>
+			<th>Account</th>
+			<th>Char</th>
+		</tr>
+	`;
+	table.appendChild(thead);
+	const tbody = document.createElement('tbody');
+	for (const r of results) {
+		const tr = document.createElement('tr');
+		const acct = r.account || '';
+		const ch = r.character || '';
+		tr.innerHTML = `
+			<td>${escapeHtml(r.leaderboard)}</td>
+			<td>${escapeHtml(r.region.toUpperCase())}</td>
+			<td>${escapeHtml(String(r.rank))}</td>
+			<td>${escapeHtml(acct)}</td>
+			<td>${escapeHtml(ch)}</td>
+		`;
+		tbody.appendChild(tr);
+	}
+	table.appendChild(tbody);
+	container.appendChild(table);
 }
 
-document.getElementById('search').addEventListener('click', async () => {
-	const name = document.getElementById('account').value.trim();
+function escapeHtml(str) {
+	return String(str)
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;');
+}
+
+const searchBtn = document.getElementById('search');
+const input = document.getElementById('account');
+async function doSearch() {
+	const name = input.value.trim();
 	if (!name) return;
-	const results = await searchAccount(name);
-	displayResults(results);
-});
+	searchBtn.disabled = true;
+	searchBtn.setAttribute('aria-busy', 'true');
+	try {
+		const results = await searchAccount(name);
+		displayResults(results);
+	} finally {
+		searchBtn.disabled = false;
+		searchBtn.removeAttribute('aria-busy');
+	}
+}
+
+if (searchBtn && input) {
+	searchBtn.addEventListener('click', doSearch);
+	input.addEventListener('keydown', (e) => {
+		if (e.key === 'Enter') doSearch();
+	});
+} else {
+	console.warn('search button or input not found, listeners not attached');
+}
