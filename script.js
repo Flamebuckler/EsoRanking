@@ -86,6 +86,16 @@ function displayResults(results) {
 		container.appendChild(empty);
 		return;
 	}
+	// sort results: region, leaderboard, rank (numeric), then account
+	results.sort((a, b) => {
+		const r = a.region.localeCompare(b.region);
+		if (r !== 0) return r;
+		const l = a.leaderboard.localeCompare(b.leaderboard);
+		if (l !== 0) return l;
+		const rk = Number(a.rank) - Number(b.rank);
+		if (rk !== 0) return rk;
+		return (a.account || '').localeCompare(b.account || '');
+	});
 
 	const table = document.createElement('table');
 	table.className = 'results-table';
