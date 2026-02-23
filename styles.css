@@ -86,6 +86,7 @@ h1 {
 	display: flex;
 	gap: 12px;
 	width: 100%;
+	align-items: stretch; /* ensure children take same height */
 }
 
 input[type='search'] {
@@ -96,7 +97,7 @@ input[type='search'] {
 	background: var(--muted-bg);
 	color: var(--text);
 	outline: none;
-	font-size: 14px;
+	font-size: 14px; /* ensure consistent height for flex alignment */
 }
 
 input::placeholder {
@@ -111,12 +112,13 @@ input:focus {
 button {
 	background: var(--accent);
 	color: #000;
-	padding: 10px 16px;
+	padding: 0 16px; /* vertical padding removed, height controlled by flex */
 	border-radius: 6px;
 	border: none;
 	cursor: pointer;
 	font-weight: 600;
 	transition: background 0.2s;
+	height: 100%;
 }
 
 button:active {
@@ -158,6 +160,11 @@ button:active {
 	font-size: 13px;
 	text-align: center;
 	padding: 20px 0;
+}
+
+.site-footer a {
+	color: inherit;
+	text-decoration: underline;
 }
 
 .visually-hidden {
