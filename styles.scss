@@ -1,0 +1,12 @@
+@use 'styles/src/main' as *;
+
+/* map central colour tokens to legacy variable names used in reset */
+:root {
+	--background-color: var(--color-background);
+	--foreground-color: var(--color-foreground);
+}
+
+/* make links in the footer inherit the surrounding text colour */
+.site-footer a {
+	color: inherit;
+}
