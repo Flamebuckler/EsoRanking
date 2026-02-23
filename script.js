@@ -74,7 +74,7 @@ function displayResults(results) {
 	const container = document.getElementById('results');
 	container.innerHTML = '';
 	if (results.length === 0) {
-		container.textContent = 'Keine Einträge gefunden';
+		container.textContent = 'No entries found';
 		return;
 	}
 	const ul = document.createElement('ul');
