@@ -1,0 +1,74 @@
+{
+	"leaderboards": [
+		{
+			"name": "Aetherian Archive",
+			"url": "https://eso-hub.com/en/leaderboards/aetherian-archive"
+		},
+		{
+			"name": "Asylum Sanctorium",
+			"url": "https://eso-hub.com/en/leaderboards/asylum-sanctorium"
+		},
+		{
+			"name": "Blackrose Prison",
+			"url": "https://eso-hub.com/en/leaderboards/blackrose-prison"
+		},
+		{
+			"name": "Cloudrest",
+			"url": "https://eso-hub.com/en/leaderboards/cloudrest"
+		},
+		{
+			"name": "Dragonstar Arena",
+			"url": "https://eso-hub.com/en/leaderboards/dragonstar-arena"
+		},
+		{
+			"name": "Dreadsail Reef",
+			"url": "https://eso-hub.com/en/leaderboards/dreadsail-reef"
+		},
+		{
+			"name": "Halls of Fabrication",
+			"url": "https://eso-hub.com/en/leaderboards/halls-of-fabrication"
+		},
+		{
+			"name": "Hel Ra Citadel",
+			"url": "https://eso-hub.com/en/leaderboards/hel-ra-citadel"
+		},
+		{
+			"name": "Kyne's Aegis",
+			"url": "https://eso-hub.com/en/leaderboards/kynes-aegis"
+		},
+		{
+			"name": "Lucent Citadel",
+			"url": "https://eso-hub.com/en/leaderboards/lucent-citadel"
+		},
+		{
+			"name": "Maw of Lorkhaj",
+			"url": "https://eso-hub.com/en/leaderboards/maw-of-lorkhaj"
+		},
+		{
+			"name": "Maw of Lorkhaj",
+			"url": "https://eso-hub.com/en/leaderboards/maw-of-lorkhaj"
+		},
+		{
+			"name": "Ossein Cage",
+			"url": "https://eso-hub.com/en/leaderboards/ossein-cage"
+		},
+		{
+			"name": "Rockgrove",
+			"url": "https://eso-hub.com/en/leaderboards/rockgrove"
+		},
+		{
+			"name": "Sanctum Ophidia",
+			"url": "https://eso-hub.com/en/leaderboards/sanctum-ophidia"
+		},
+		{
+			"name": "Sanity’s Edge",
+			"url": "https://eso-hub.com/en/leaderboards/sanitys-edge"
+		},
+		{
+			"name": "Sunspire",
+			"url": "https://eso-hub.com/en/leaderboards/sunspire"
+		}
+	],
+
+	"regions": ["pc-eu"]
+}
