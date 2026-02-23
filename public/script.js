@@ -1,34 +1,59 @@
 async function searchAccount(name) {
-	// try live API first
-	try {
-		const res = await fetch(`/api/search?name=${encodeURIComponent(name)}`);
-		if (res.ok) {
-			return res.json();
-		}
-		console.warn('API returned', res.status);
-	} catch (e) {
-		console.warn('Live API unreachable, falling back to static data', e);
-	}
-
-	// fallback: search in data.json (used for static mode)
+	// search using the bundled static data only (no live API available)
+	// load static data from data.json on first use
 	if (!window.__staticData) {
+		console.log('Loading static data from data.json...');
 		try {
 			const r = await fetch('data.json');
 			window.__staticData = await r.json();
+			// build index
+			window.__index = new Map();
+			for (const [lbName, regions] of Object.entries(window.__staticData)) {
+				for (const [region, entries] of Object.entries(regions)) {
+					for (const entry of entries) {
+						const acct = entry.account ? entry.account.replace(/^@/, '').toLowerCase() : '';
+						const char = entry.character ? entry.character.replace(/^@/, '').toLowerCase() : '';
+						[acct, char].forEach((key) => {
+							if (!key) return;
+							if (!window.__index.has(key)) window.__index.set(key, []);
+							window.__index.get(key).push({
+								leaderboard: lbName,
+								region,
+								rank: entry.rank,
+								account: entry.account,
+								character: entry.character,
+							});
+						});
+					}
+				}
+			}
 		} catch (e) {
 			console.error('could not load static data', e);
 			return [];
 		}
 	}
+	// perform lookup via index if available
 	const results = [];
-	// normalize query for comparison
 	const query = name.replace(/^@/, '').toLowerCase();
+	if (window.__index) {
+		// exact key match first
+		if (window.__index.has(query)) {
+			results.push(...window.__index.get(query));
+		}
+		// also add substring matches (iterate keys or use scan)
+		for (const [key, arr] of window.__index) {
+			if (key.includes(query) && key !== query) {
+				results.push(...arr);
+			}
+		}
+		return results;
+	}
+	// fallback linear scan if index missing (shouldn't happen)
 	for (const [lbName, regions] of Object.entries(window.__staticData)) {
 		for (const [region, entries] of Object.entries(regions)) {
 			for (const entry of entries) {
 				const acct = entry.account ? entry.account.replace(/^@/, '').toLowerCase() : '';
 				const char = entry.character ? entry.character.replace(/^@/, '').toLowerCase() : '';
-				// substring match for similarity
 				if (acct.includes(query) || char.includes(query)) {
 					results.push({
 						leaderboard: lbName,
