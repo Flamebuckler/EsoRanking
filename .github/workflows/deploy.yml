@@ -36,6 +36,11 @@ jobs:
           sudo apt-get install -y ca-certificates fonts-liberation libnss3 libatk-bridge2.0-0 libxss1 libatk1.0-0 libgtk-3-0 libx11-xcb1 libgbm-dev || true
       - name: Run scraper
         run: npm run scrape
+      - name: Ensure .nojekyll in public
+        run: |
+          mkdir -p public
+          touch public/.nojekyll
+          echo ".nojekyll created" && ls -la public || true
       - name: Verify public directory
         run: |
           echo "Listing public/ contents:" && ls -la public || true

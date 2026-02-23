@@ -1,7 +1,7 @@
 # ESO Ranking
 
-A simple web interface to search Elder Scrolls Online leaderboards.
+Welcome to ESO Ranking — a tiny app to help you quickly find a player's placement on Elder Scrolls Online leaderboards.
 
-Open the site and enter an account name to find leaderboard placements.
+Just open the site and type an account name to see where that player ranks.
 
-Data source: Data is sourced from eso-hub.com; rights to the data remain with eso-hub.com.
+Data source: leaderboard data is provided by eso-hub.com; all rights to the data belong to eso-hub.com.

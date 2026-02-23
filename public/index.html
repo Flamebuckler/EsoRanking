@@ -1,36 +1,37 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta
 			name="viewport"
 			content="width=device-width, initial-scale=1.0" />
-		<title>ESO Leaderboard Suche</title>
-		<style>
-			body {
-				font-family: Arial, sans-serif;
-				margin: 2rem;
-			}
-			input {
-				padding: 0.5rem;
-				width: 200px;
-			}
-			button {
-				padding: 0.5rem 1rem;
-			}
-			#results {
-				margin-top: 1rem;
-			}
-		</style>
+		<title>ESO Ranking</title>
+		<link
+			rel="stylesheet"
+			href="styles.css" />
 	</head>
 	<body>
-		<h1>ESO Leaderboard Suche</h1>
-		<p>Gib den Accountnamen ein:</p>
-		<input
-			id="account"
-			placeholder="Accountname" />
-		<button id="search">Suchen</button>
-		<div id="results"></div>
+		<div class="wrap">
+			<div class="card">
+				<div class="header">
+					<div class="logo">ESO</div>
+					<div>
+						<h1>ESO Ranking</h1>
+						<div class="subtitle">Search by account or character — minimal &amp; dark</div>
+					</div>
+				</div>
+
+				<div class="controls">
+					<input
+						id="account"
+						type="search"
+						placeholder="Account or character" />
+					<button id="search">Search</button>
+				</div>
+
+				<div id="results"></div>
+			</div>
+		</div>
 
 		<script src="script.js"></script>
 	</body>
