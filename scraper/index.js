@@ -11,7 +11,12 @@ const { leaderboards, regions } = require('../config.json');
  * Returns an object `{ 'pc-eu': [...], 'pc-na': [...] }`.
  */
 async function fetchLeaderboard(url) {
-	const browser = await puppeteer.launch();
+	// In CI environments (GitHub Actions) the Chromium sandbox is not available.
+	// Pass common flags to run Chromium without the sandbox there. This is
+	// needed only for CI; avoid --no-sandbox on untrusted systems if possible.
+	const browser = await puppeteer.launch({
+		args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
+	});
 	const page = await browser.newPage();
 	await page.goto(url, { waitUntil: 'networkidle2' });
 	// Warte auf mindestens ein Tabellen-Element, damit das JS gerendert hat
