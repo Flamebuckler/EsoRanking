@@ -11,27 +11,52 @@
 			href="styles.css" />
 	</head>
 	<body>
-		<div class="wrap">
-			<div class="card">
-				<div class="header">
-					<div class="logo">ESO</div>
-					<div>
-						<h1>ESO Ranking</h1>
-						<div class="subtitle">Search by account or character — minimal &amp; dark</div>
-					</div>
+		<header class="site-header">
+			<div class="container">
+				<div class="brand">
+					<h1>ESO Ranking</h1>
 				</div>
-
-				<div class="controls">
+			</div>
+		</header>
+		<main class="container">
+			<section
+				class="card search-card"
+				aria-labelledby="search-title">
+				<h2
+					id="search-title"
+					class="visually-hidden">
+					Search
+				</h2>
+				<form
+					id="search-form"
+					class="controls"
+					onsubmit="return false;">
+					<label
+						for="account"
+						class="visually-hidden"
+						>Account or Character</label
+					>
 					<input
 						id="account"
 						type="search"
-						placeholder="Account or character" />
-					<button id="search">Search</button>
-				</div>
+						placeholder="Search…"
+						autocomplete="off" />
+					<button
+						id="search"
+						type="button">
+						Search
+					</button>
+				</form>
+			</section>
 
-				<div id="results"></div>
-			</div>
-		</div>
+			<section
+				id="results"
+				class="card results-card hidden"
+				aria-live="polite"
+				style="display: none;">
+				<div class="empty">Begin typing above</div>
+			</section>
+		</main>
 
 		<script src="script.js"></script>
 	</body>
