@@ -124,8 +124,8 @@ function displayResults(results) {
 	const thead = document.createElement('thead');
 	thead.innerHTML = `
 		<tr>
-			<th>Leaderboard</th>
 			<th>Region</th>
+			<th>Leaderboard</th>
 			<th>Rang</th>
 			<th>Account</th>
 			<th>Char</th>
@@ -138,8 +138,8 @@ function displayResults(results) {
 		const acct = r.account || '';
 		const ch = r.character || '';
 		tr.innerHTML = `
-			<td>${escapeHtml(r.leaderboard)}</td>
 			<td>${escapeHtml(r.region.toUpperCase())}</td>
+			<td>${escapeHtml(r.leaderboard)}</td>
 			<td>${escapeHtml(String(r.rank))}</td>
 			<td>${escapeHtml(acct)}</td>
 			<td>${escapeHtml(ch)}</td>
