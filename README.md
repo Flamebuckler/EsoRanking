@@ -4,4 +4,6 @@ Welcome to ESO Ranking — a tiny app to help you quickly find a player's placem
 
 Just open the site and type an account name to see where that player ranks.
 
+https://github.com/Flamebuckler/EsoRanking
+
 Data source: leaderboard data is provided by eso-hub.com; all rights to the data belong to eso-hub.com.
