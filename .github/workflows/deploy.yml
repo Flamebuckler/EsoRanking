@@ -1,5 +1,9 @@
 name: Deploy to GitHub Pages
 
+permissions:
+  contents: write
+  pages: write
+
 on:
   push:
     branches:
@@ -32,6 +36,13 @@ jobs:
           sudo apt-get install -y ca-certificates fonts-liberation libnss3 libatk-bridge2.0-0 libxss1 libatk1.0-0 libgtk-3-0 libx11-xcb1 libgbm-dev || true
       - name: Run scraper
         run: npm run scrape
+      - name: Verify public directory
+        run: |
+          echo "Listing public/ contents:" && ls -la public || true
+          if [ ! -d public ] || [ -z "$(ls -A public 2>/dev/null)" ]; then
+            echo "public/ is missing or empty - aborting deployment";
+            exit 1;
+          fi
       - name: Commit data.json if changed
         run: |
           git config user.name "github-actions[bot]"
