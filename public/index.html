@@ -9,6 +9,16 @@
 		<link
 			rel="stylesheet"
 			href="styles.css" />
+
+		<script>
+			const workerUrl = 'https://page-counter.flamebuckler.workers.dev';
+			const pageId = 'ESO-Ranking'; // Unique identifier for this page
+
+			fetch(`${workerUrl}/increment?page=${encodeURIComponent(pageId)}`, {
+				method: 'POST',
+				keepalive: true,
+			});
+		</script>
 	</head>
 	<body>
 		<header class="site-header">
